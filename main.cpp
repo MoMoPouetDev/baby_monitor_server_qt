@@ -1,12 +1,13 @@
 #include <QApplication>
-#include "server.h"
+#include <QtWidgets>
 
-int main(int argc, char* argv[])
+#include "manager.h"
+
+int main (int argc, char *argv[])
 {
     QApplication app(argc, argv);
 
-    Server fenetre;
-    fenetre.show();
+    Manager MainManager;
 
     return app.exec();
 }

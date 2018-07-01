@@ -12,37 +12,30 @@ Server::Server()
     layout->addWidget(boutonQuitter);
     setLayout(layout);
 
-    setWindowTitle(tr("ZeroChat - Serveur"));
+    setWindowTitle(tr("Serveur"));
 
     // Gestion du serveur
     serveur = new QTcpServer(this);
-    if (!serveur->listen(QHostAddress::Any, 50885)) // Démarrage du serveur sur toutes les IP disponibles et sur le port 50585
-    {
-        // Si le serveur n'a pas été démarré correctement
-        etatServeur->setText(tr("Le serveur n'a pas pu être démarré. Raison :<br />") + serveur->errorString());
-    }
-    else
-    {
-        // Si le serveur a été démarré correctement
-        etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter."));
-        connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
-    }
+
+    while(!connection());
 
     tailleMessage = 0;
 }
 
-void Server::nouvelleConnexion()
+Server::~Server()
 {
-    envoyerATous(tr("<em>Un nouveau client vient de se connecter</em>"));
-
-    QTcpSocket *nouveauClient = serveur->nextPendingConnection();
-    clients << nouveauClient;
-
-    connect(nouveauClient, SIGNAL(readyRead()), this, SLOT(donneesRecues()));
-    connect(nouveauClient, SIGNAL(disconnected()), this, SLOT(deconnexionClient()));
 }
 
-void Server::donneesRecues()
+void Server::newConnection()
+{
+    QTcpSocket *client = serveur->nextPendingConnection();
+    clients << client;
+
+    connect(client, SIGNAL(readyRead()), this, SLOT(receivedData()));
+    connect(client, SIGNAL(disconnected()), this, SLOT(newDisconnection()));
+}
+
+void Server::receivedData()
 {
     // 1 : on reçoit un paquet (ou un sous-paquet) d'un des clients
 
@@ -73,16 +66,15 @@ void Server::donneesRecues()
 
 
     // 2 : on renvoie le message à tous les clients
-    envoyerATous(message);
+    //envoyerATous(message);
+    decodeString(message);
 
     // 3 : remise de la taille du message à 0 pour permettre la réception des futurs messages
     tailleMessage = 0;
 }
 
-void Server::deconnexionClient()
+void Server::newDisconnection()
 {
-    envoyerATous(tr("<em>Un client vient de se déconnecter</em>"));
-
     // On détermine quel client se déconnecte
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     if (socket == 0) // Si par hasard on n'a pas trouvé le client à l'origine du signal, on arrête la méthode
@@ -93,7 +85,45 @@ void Server::deconnexionClient()
     socket->deleteLater();
 }
 
-void Server::envoyerATous(const QString &message)
+bool Server::connection()
+{
+    if (!serveur->listen(QHostAddress("192.168.0.102"), 50885)) // Démarrage du serveur sur toutes les IP disponibles et sur le port 50585
+    {
+        // Si le serveur n'a pas été démarré correctement
+        etatServeur->setText(tr("Le serveur n'a pas pu être démarré. Raison :<br />") + serveur->errorString());
+        qDebug() << "not connected";
+        return false;
+    }
+    else
+    {
+        // Si le serveur a été démarré correctement
+        etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter."));
+        connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
+        return true;
+    }
+}
+
+void Server::decodeString(const QString &message)
+{
+    if(message == "Library")
+    {}
+    else if(message == "SoundUp")
+    {}
+    else if(message == "SoundDown")
+    {}
+    else if(message == "SoundMute")
+    {}
+    else if(message == "SoundUnmute")
+    {}
+    else if(message == "PowerOff")
+    {}
+    else
+    {
+        /*Parcour List music*/
+    }
+}
+
+void Server::sendString(const QString &message)
 {
     // Préparation du paquet
     QByteArray paquet;

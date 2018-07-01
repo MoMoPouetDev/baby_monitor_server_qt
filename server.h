@@ -11,14 +11,17 @@ class Server : public QWidget
 
     public:
         Server();
-        void envoyerATous(const QString &message);
+        ~Server();
+        bool connection();
+        void decodeString(const QString &message);
+        void sendString(const QString &message);
 
     private slots:
-        void nouvelleConnexion();
-        void donneesRecues();
-        void deconnexionClient();
+        void newConnection();
+        void receivedData();
+        void newDisconnection();
 
-    private:
+    private:        
         QLabel *etatServeur;
         QPushButton *boutonQuitter;
 
