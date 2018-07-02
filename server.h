@@ -29,7 +29,7 @@ class Server : public QWidget
         void isReadyDecoder(Decoder*);
 
     private:        
-        Decoder* m_decoder;
+        Decoder *m_decoder;
         QLabel *etatServeur;
         QPushButton *boutonQuitter;
 

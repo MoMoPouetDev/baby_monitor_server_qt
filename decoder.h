@@ -8,6 +8,7 @@
 
 #include "manager.h"
 
+class Server;
 class Decoder : public QObject
 {
     //Q_OBJECT
@@ -20,10 +21,14 @@ class Decoder : public QObject
         void sendMusicLibrary();
         QStringList getLibrary();
 
-    //private slots:
+    private slots:
+        void getThisServer(Server*);
+
+    signals:
+        void isReadyServer(Server*);
 
     private:
-        //QString message;
+        Server *m_server;
 };
 
 #endif // DECODER_H
