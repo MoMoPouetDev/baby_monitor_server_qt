@@ -4,7 +4,9 @@
 #include <QtWidgets>
 #include <QtNetwork>
 
+#include "manager.h"
 
+class Decoder;
 class Server : public QWidget
 {
     Q_OBJECT
@@ -12,6 +14,7 @@ class Server : public QWidget
     public:
         Server();
         ~Server();
+        Server* getThisServer();
         bool connection();
         void decodeString(const QString &message);
         void sendString(const QString &message);
@@ -20,8 +23,13 @@ class Server : public QWidget
         void newConnection();
         void receivedData();
         void newDisconnection();
+        void getThisDecoder(Decoder*);
+
+    signals:
+        void isReadyDecoder(Decoder*);
 
     private:        
+        Decoder* m_decoder;
         QLabel *etatServeur;
         QPushButton *boutonQuitter;
 

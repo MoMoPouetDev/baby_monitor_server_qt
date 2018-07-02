@@ -5,6 +5,8 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += server.h \
-    manager.h
+    manager.h \
+    decoder.h
 SOURCES += server.cpp main.cpp \
-    manager.cpp
+    manager.cpp \
+    decoder.cpp
