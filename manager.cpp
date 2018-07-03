@@ -4,10 +4,10 @@
 
 Manager::Manager() : QObject()
 {
-    m_decoder = new Decoder;
     m_server = new Server;
+    m_decoder = new Decoder;
     emit m_server->isReadyDecoder(m_decoder);
-    //emit m_decoder->isReadyServer(m_server);
+    emit m_decoder->isReadyServer(m_server);
 
     m_server->show();
 }

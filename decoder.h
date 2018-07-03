@@ -11,7 +11,7 @@
 class Server;
 class Decoder : public QObject
 {
-    //Q_OBJECT
+    Q_OBJECT
 
     public:
         Decoder();

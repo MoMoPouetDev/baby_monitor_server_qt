@@ -1,13 +1,13 @@
+#include <QDebug>
 #include "decoder.h"
 
-Decoder::Decoder()
+Decoder::Decoder() : QObject()
 {
     QObject::connect(this, SIGNAL(isReadyServer(Server*)), this, SLOT(getThisServer(Server*)));
 }
 
 Decoder::~Decoder()
 {
-
 }
 
 Decoder* Decoder::getThisDecoder()
@@ -29,7 +29,7 @@ QStringList Decoder::getLibrary()
 
 void Decoder::decodeString(const QString &message)
 {
-    qDebug()<<"Decder: " + message;
+    qDebug()<<"Decoder: " + message;
 
     if(message == "Library")
     {

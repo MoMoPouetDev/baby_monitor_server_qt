@@ -8,7 +8,7 @@ class Server;
 class Decoder;
 class Manager : public QObject
 {
-    Q_OBJECT
+    //Q_OBJECT
 
 public:
     Manager();
