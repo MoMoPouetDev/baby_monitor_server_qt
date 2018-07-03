@@ -23,6 +23,7 @@ void Decoder::getThisServer(Server* server)
 QStringList Decoder::getLibrary()
 {
     QStringList library(QDir("/home/morgan/git/baby_monitor_server_qt/musics/").entryList());
+    library = library.filter(".wav");
     qDebug() << library;
     return library;
 }
@@ -54,6 +55,7 @@ void Decoder::decodeString(const QString &message)
 void Decoder::sendMusicLibrary()
 {
     QStringList library = getLibrary();
+    library.insert(0,"Library");
     QString libraryString = library.join(";");
 
     m_server->sendString(libraryString);

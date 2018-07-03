@@ -99,7 +99,7 @@ void Server::getThisDecoder(Decoder* decoder)
 
 bool Server::connection()
 {
-    if (!serveur->listen(QHostAddress("192.168.0.102"), 50885)) // Démarrage du serveur sur toutes les IP disponibles et sur le port 50585
+    if (!serveur->listen(QHostAddress::Any, 50885)) // Démarrage du serveur sur toutes les IP disponibles et sur le port 50585
     {
         // Si le serveur n'a pas été démarré correctement
         etatServeur->setText(tr("Le serveur n'a pas pu être démarré. Raison :<br />") + serveur->errorString());
@@ -110,7 +110,7 @@ bool Server::connection()
     {
         // Si le serveur a été démarré correctement
         etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter."));
-        connect(serveur, SIGNAL(newConnection()), this, SLOT(nouvelleConnexion()));
+        connect(serveur, SIGNAL(newConnection()), this, SLOT(newConnection()));
         return true;
     }
 }
