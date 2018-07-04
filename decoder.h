@@ -9,6 +9,7 @@
 #include "manager.h"
 
 class Server;
+class Player;
 class Decoder : public QObject
 {
     Q_OBJECT
@@ -23,12 +24,15 @@ class Decoder : public QObject
 
     private slots:
         void getThisServer(Server*);
+        void getThisPlayer(Player*);
 
     signals:
         void isReadyServer(Server*);
+        void isReadyPlayer(Player*);
 
     private:
         Server *m_server;
+        Player *m_player;
 };
 
 #endif // DECODER_H

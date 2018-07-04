@@ -9,6 +9,9 @@ Manager::Manager() : QObject()
     emit m_server->isReadyDecoder(m_decoder);
     emit m_decoder->isReadyServer(m_server);
 
+    m_player = new Player;
+    emit m_decoder->isReadyPlayer(m_player);
+
     m_server->show();
 }
 
@@ -16,6 +19,7 @@ Manager::~Manager()
 {
     m_decoder->deleteLater();
     m_server->deleteLater();
+    m_player->deleteLater();
 }
 
 Server* Manager::getInstanceServer()
@@ -26,4 +30,9 @@ Server* Manager::getInstanceServer()
 Decoder* Manager::getInstanceDecoder()
 {
     return m_decoder;
+}
+
+Player* Manager::getInstancePlayer()
+{
+    return m_player;
 }

@@ -3,9 +3,11 @@
 
 #include "server.h"
 #include "decoder.h"
+#include "player.h"
 
 class Server;
 class Decoder;
+class Player;
 class Manager : public QObject
 {
     //Q_OBJECT
@@ -15,10 +17,12 @@ public:
     ~Manager();
     Server* getInstanceServer();
     Decoder* getInstanceDecoder();
+    Player* getInstancePlayer();
 
 private:
     Server *m_server;
     Decoder *m_decoder;
+    Player *m_player;
 
 };
 
