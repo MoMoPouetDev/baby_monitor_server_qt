@@ -5,6 +5,7 @@
 #include <QString>
 #include <QStringList>
 #include <QDir>
+#include <QProcess>
 
 #include "manager.h"
 
@@ -33,6 +34,9 @@ class Decoder : public QObject
     private:
         Server *m_server;
         Player *m_player;
+
+        QString m_powerOff = "/sbin/shutdown now";
+        QProcess *m_process;
 };
 
 #endif // DECODER_H

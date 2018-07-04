@@ -5,6 +5,7 @@
 
 Decoder::Decoder() : QObject()
 {
+    m_process = new QProcess;
     QObject::connect(this, SIGNAL(isReadyServer(Server*)), this, SLOT(getThisServer(Server*)));
     QObject::connect(this, SIGNAL(isReadyPlayer(Player*)), this, SLOT(getThisPlayer(Player*)));
 }
@@ -31,7 +32,7 @@ void Decoder::getThisPlayer(Player *player)
 QStringList Decoder::getLibrary()
 {
     QStringList library(QDir("/home/morgan/git/baby_monitor_server_qt/musics/").entryList());
-    library = library.filter(".wav");
+    library = library.filter(".mp3");
     qDebug() << library;
     return library;
 }
@@ -48,26 +49,26 @@ void Decoder::decodeString(const QString &message)
     }
     else if (string.at(0) == "Play") {
         string.removeFirst();
-        qDebug() << "play music: " << string;
         /* Send to the play with url */
-    }
-    else if (string.at(0) == "Volume") {
+        QString musicFile = string[0];
 
+        m_player->playMusic(musicFile);
+        m_player->getVolumePlayer();
     }
     else if (string.at(0) == "SoundUp") {
-
+        m_player->buttonPlus();
     }
     else if (string.at(0) == "SoundDown") {
-
+        m_player->buttonMinus();
     }
     else if (string.at(0) == "SoundMute") {
-
+        m_player->buttonMute();
     }
-    else if (string.at(0) == "SoundUnmute") {
-
+    else if (string.at(0) == "Volume") {
+        m_player->getVolumePlayer();
     }
     else if (string.at(0) == "PowerOff") {
-
+        m_process->startDetached(m_powerOff);
     }
 }
 
