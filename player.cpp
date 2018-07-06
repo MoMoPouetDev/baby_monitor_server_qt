@@ -13,6 +13,7 @@ Player::Player()
 
 Player::~Player()
 {
+    m_player->deleteLater();
 }
 
 Player* Player::getThisPlayer()

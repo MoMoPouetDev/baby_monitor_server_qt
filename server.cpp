@@ -26,6 +26,9 @@ Server::Server()
 
 Server::~Server()
 {
+    etatServeur->deleteLater();
+    boutonQuitter->deleteLater();
+    serveur->deleteLater();
 }
 
 Server* Server::getThisServer()

@@ -12,6 +12,7 @@ Decoder::Decoder() : QObject()
 
 Decoder::~Decoder()
 {
+    m_process->deleteLater();
 }
 
 Decoder* Decoder::getThisDecoder()
