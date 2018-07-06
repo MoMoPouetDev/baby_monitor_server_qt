@@ -33,6 +33,11 @@ void Player::playMusic(QString music)
     m_player->play();
 }
 
+void Player::stopMusic()
+{
+    m_player->stop();
+}
+
 void Player::buttonPlus(void)
 {
     if(m_player->isMuted())

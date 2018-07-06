@@ -24,6 +24,7 @@ class Player : public QObject
         void buttonMinus(void);
         void buttonMute(void);
         void getVolumePlayer(void);
+        void stopMusic();
 
     private slots:
         void getThisServer(Server*);

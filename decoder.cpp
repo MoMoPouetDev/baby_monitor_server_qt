@@ -55,6 +55,9 @@ void Decoder::decodeString(const QString &message)
         m_player->playMusic(musicFile);
         m_player->getVolumePlayer();
     }
+    else if (string.at(0) == "SoundStop") {
+        m_player->stopMusic();
+    }
     else if (string.at(0) == "SoundUp") {
         m_player->buttonPlus();
     }
