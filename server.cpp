@@ -2,18 +2,6 @@
 
 Server::Server()
 {
-    // Création et disposition des widgets de la fenêtre
-    etatServeur = new QLabel;
-    boutonQuitter = new QPushButton(tr("Quitter"));
-    connect(boutonQuitter, SIGNAL(clicked()), qApp, SLOT(quit()));
-
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->addWidget(etatServeur);
-    layout->addWidget(boutonQuitter);
-    setLayout(layout);
-
-    setWindowTitle(tr("Serveur"));
-
     // Gestion du serveur
     serveur = new QTcpServer(this);
 
@@ -26,8 +14,6 @@ Server::Server()
 
 Server::~Server()
 {
-    etatServeur->deleteLater();
-    boutonQuitter->deleteLater();
     serveur->deleteLater();
 }
 
@@ -76,7 +62,6 @@ void Server::receivedData()
 
 
     // 2 : on renvoie le message à tous les clients
-    //envoyerATous(message);
     decodeString(message);
 
     // 3 : remise de la taille du message à 0 pour permettre la réception des futurs messages
@@ -105,14 +90,15 @@ bool Server::connection()
     if (!serveur->listen(QHostAddress::Any, 50885)) // Démarrage du serveur sur toutes les IP disponibles et sur le port 50585
     {
         // Si le serveur n'a pas été démarré correctement
-        etatServeur->setText(tr("Le serveur n'a pas pu être démarré. Raison :<br />") + serveur->errorString());
-        qDebug() << "not connected";
+        etatServeur = "Le serveur n'a pas pu être démarré. Raison :" + serveur->errorString();
+        qDebug() << etatServeur;
         return false;
     }
     else
     {
         // Si le serveur a été démarré correctement
-        etatServeur->setText(tr("Le serveur a été démarré sur le port <strong>") + QString::number(serveur->serverPort()) + tr("</strong>.<br />Des clients peuvent maintenant se connecter."));
+        etatServeur = "Le serveur a été démarré sur le port" + QString::number(serveur->serverPort()) + ". Des clients peuvent maintenant se connecter.";
+        qDebug() << etatServeur;
         connect(serveur, SIGNAL(newConnection()), this, SLOT(newConnection()));
         return true;
     }

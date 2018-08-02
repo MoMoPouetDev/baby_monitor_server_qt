@@ -1,13 +1,12 @@
 #ifndef HEADER_FENSERVEUR
 #define HEADER_FENSERVEUR
 
-#include <QtWidgets>
 #include <QtNetwork>
 
 #include "manager.h"
 
 class Decoder;
-class Server : public QWidget
+class Server : public QObject
 {
     Q_OBJECT
 
@@ -30,8 +29,7 @@ class Server : public QWidget
 
     private:        
         Decoder *m_decoder;
-        QLabel *etatServeur;
-        QPushButton *boutonQuitter;
+        QString etatServeur;
 
         QTcpServer *serveur;
         QList<QTcpSocket *> clients;

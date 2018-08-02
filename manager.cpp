@@ -12,8 +12,6 @@ Manager::Manager() : QObject()
     m_player = new Player;
     emit m_decoder->isReadyPlayer(m_player);
     emit m_player->isReadyServer(m_server);
-
-    m_server->show();
 }
 
 Manager::~Manager()
