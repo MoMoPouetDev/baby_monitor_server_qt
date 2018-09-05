@@ -5,7 +5,7 @@
 
 #include "manager.h"
 
-#define PATH_DIR_MUSICS "/home/morgan/git/baby_monitor_server_qt/musics/"
+#define PATH_DIR_MUSICS "/home/pi/server/musics/"
 #define SOUND_MAX   100
 #define SOUND_MIN   0
 #define SOUND_MARGIN    10
