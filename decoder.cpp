@@ -32,7 +32,7 @@ void Decoder::getThisPlayer(Player *player)
 
 QStringList Decoder::getLibrary()
 {
-    QStringList library(QDir("/home/morgan/git/baby_monitor_server_qt/musics/").entryList());
+    QStringList library(QDir("/home/pi/server/musics/").entryList());
     library = library.filter(".mp3");
     qDebug() << library;
     return library;
